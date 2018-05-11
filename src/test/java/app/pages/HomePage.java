@@ -1,5 +1,6 @@
 package app.pages;
 
+import app.pages.ResultPages.VstraivaemayaPosudomoechnayaMashinaPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,17 +26,17 @@ public class HomePage extends AbstractPage{
         langBtn.click();
     }
 
-    public ResultPage chooseCategory(By categoryFirstStepLoc, By categorySecondStepLoc, By categoryThirdStepLoc) throws InterruptedException {
+    public VstraivaemayaPosudomoechnayaMashinaPage chooseCategory(By categoryFirstStepLoc, By categorySecondStepLoc, By categoryThirdStepLoc) throws InterruptedException {
         Actions action1 = new Actions(driver);
         WebElement categoryFirstStep = driver.findElement(categoryFirstStepLoc);
         action1.moveToElement(categoryFirstStep).build().perform();
         WebElement myDynamicElement = (new WebDriverWait(driver, 10))
-                .until(ExpectedConditions.presenceOfElementLocated(categorySecondStepLoc));
+                .until(ExpectedConditions.visibilityOfElementLocated(categorySecondStepLoc));
         WebElement categorySecondStep = driver.findElement(categorySecondStepLoc);
         categorySecondStep.click();
         WebElement categoryThirdStep = driver.findElement(categoryThirdStepLoc);
         categoryThirdStep.click();
-        return new ResultPage(driver);
+        return new VstraivaemayaPosudomoechnayaMashinaPage(driver);
     }
 
     public void chooseFirstCategory(By categoryFirstStepLoc){
