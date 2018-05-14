@@ -1,12 +1,20 @@
 package app.tests;
 
 import app.pages.HomePage;
+import app.pages.ResultPages.ResultPage;
 import app.pages.ResultPages.VstraivaemayaPosudomoechnayaMashinaPage;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+
+import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 
 public class Smoke extends BaseTest {
     Boolean result;
@@ -40,12 +48,10 @@ public class Smoke extends BaseTest {
         VstraivaemayaPosudomoechnayaMashinaPage vstraivaemayaPosudomoechnayaMashinaPage =
                 homePage.chooseCategory(homePage.bt, homePage.vstraivaemayaTehnika, homePage.posudomoechnyeMashiny);
         vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.polovynaZavantazhenniaFilterLoc);
-        String actualCheckedFilterText =
+        Boolean isFilterChecked =
                 vstraivaemayaPosudomoechnayaMashinaPage.checkFilterIsSet(vstraivaemayaPosudomoechnayaMashinaPage.checkedPolovynaZavantazhenniaFilterLoc);
-        String expectedCheckedFilterText = "половинна завантаження";
-        System.out.println("Expected: " + expectedCheckedFilterText);
-        System.out.println("Actual: " + actualCheckedFilterText);
-        Assert.assertEquals(expectedCheckedFilterText, actualCheckedFilterText);
+        System.out.println("Actual: " + isFilterChecked);
+        Assert.assertTrue (isFilterChecked);
     }
 
     @Test
@@ -58,31 +64,90 @@ public class Smoke extends BaseTest {
         Assert.assertEquals(24, resultsList.size());
     }
 
+//    @Test
+//    public void setAllFilters() throws InterruptedException {
+//        HomePage homePage = new HomePage(driver);
+//        VstraivaemayaPosudomoechnayaMashinaPage vstraivaemayaPosudomoechnayaMashinaPage =
+//                homePage.chooseCategory(homePage.bt, homePage.vstraivaemayaTehnika, homePage.posudomoechnyeMashiny);
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.polovynaZavantazhenniaFilterLoc);
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.zamochuvanniaFilterLoc);
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.timerFilterLoc);
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.komplektiv8FilterLoc);
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.komplektiv12FilterLoc);
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.shyryna42FilterLoc);
+//
+//        vstraivaemayaPosudomoechnayaMashinaPage.expandOtherFilters();
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.vysota80FilterLoc);
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.hlybyna55FilterLoc);
+//        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.pidlohoviFilterLoc);
+//
+//        Boolean isFilterChecked =
+//                vstraivaemayaPosudomoechnayaMashinaPage.checkFilterIsSet(vstraivaemayaPosudomoechnayaMashinaPage.checkedPolovynaZavantazhenniaFilterLoc);
+//        System.out.println("Actual: " + isFilterChecked);
+//        Assert.assertTrue (isFilterChecked);
+//        Thread.sleep(1000);
+//    }
+
     @Test
-    public void setAllFilters() throws InterruptedException {
+    public void setFilters() throws InterruptedException {
         HomePage homePage = new HomePage(driver);
         VstraivaemayaPosudomoechnayaMashinaPage vstraivaemayaPosudomoechnayaMashinaPage =
                 homePage.chooseCategory(homePage.bt, homePage.vstraivaemayaTehnika, homePage.posudomoechnyeMashiny);
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.polovynaZavantazhenniaFilterLoc);
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.zamochuvanniaFilterLoc);
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.timerFilterLoc);
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.komplektiv8FilterLoc);
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.komplektiv12FilterLoc);
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.shyryna42FilterLoc);
 
         vstraivaemayaPosudomoechnayaMashinaPage.expandOtherFilters();
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.vysota80FilterLoc);
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.hlybyna55FilterLoc);
-        vstraivaemayaPosudomoechnayaMashinaPage.setFilter(vstraivaemayaPosudomoechnayaMashinaPage.pidlohoviFilterLoc);
 
-        String actualSetFilterText =
-                vstraivaemayaPosudomoechnayaMashinaPage.checkFilterIsSet(vstraivaemayaPosudomoechnayaMashinaPage.checkedPolovynaZavantazhenniaFilterLoc);
-        String expectedSetFilterText = "половинна завантаження";
-        System.out.println("Expected: " + expectedSetFilterText);
-        System.out.println("Actual: " + actualSetFilterText);
-        Assert.assertEquals(expectedSetFilterText, actualSetFilterText);
-        Thread.sleep(3000000);
+        List<By> filtersLocators = Arrays.asList(
+                vstraivaemayaPosudomoechnayaMashinaPage.polovynaZavantazhenniaFilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.zamochuvanniaFilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.timerFilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.komplektiv8FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.komplektiv12FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.shyryna42FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.vysota80FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.hlybyna55FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.pidlohoviFilterLoc
+                );
+
+        vstraivaemayaPosudomoechnayaMashinaPage.setFilters(filtersLocators);
+
+        List<By> checkedFiltersLocators = Arrays.asList(
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedPolovynaZavantazhenniaFilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedZamochuvanniaFilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedTimerFilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedKomplektiv8FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedKomplektiv12FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedShyryna42FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedVysota80FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedHlybyna55FilterLoc,
+                vstraivaemayaPosudomoechnayaMashinaPage.checkedPidlohoviFilterLoc
+        );
+
+        List<Boolean> actualAreFiltersDisplayed =
+                vstraivaemayaPosudomoechnayaMashinaPage.checkFiltersAreSet(checkedFiltersLocators);
+
+        List<Boolean> expectedAreFiltersDisplayed = new ArrayList<Boolean>();
+
+        for (Boolean element : actualAreFiltersDisplayed) {
+            expectedAreFiltersDisplayed.add(true);
+        }
+
+        System.out.println("Expected: " + expectedAreFiltersDisplayed);
+        System.out.println("Actual: " + actualAreFiltersDisplayed);
+
+        Assert.assertTrue (actualAreFiltersDisplayed.equals(expectedAreFiltersDisplayed));
     }
+
+    @Test
+    public void openAllWithPrice() throws InterruptedException {
+        HomePage homePage = new HomePage(driver);
+        VstraivaemayaPosudomoechnayaMashinaPage vstraivaemayaPosudomoechnayaMashinaPage =
+                homePage.chooseCategory(homePage.bt, homePage.vstraivaemayaTehnika, homePage.posudomoechnyeMashiny);
+        vstraivaemayaPosudomoechnayaMashinaPage.openAllWithPrice(6, vstraivaemayaPosudomoechnayaMashinaPage.resultPricesLoc);
+    }
+
+
+
+
 
 
     @Ignore
@@ -98,10 +163,12 @@ public class Smoke extends BaseTest {
         WebElement element = driver.findElement(elementLoc);
         String actualAttribute = element.getAttribute(attributeName);
         result = expectedAttribute.contentEquals(actualAttribute);
-        System.out.println(expectedAttribute);
-        System.out.println(actualAttribute);
-        System.out.println(result);
+//        System.out.println(expectedAttribute);
+//        System.out.println(actualAttribute);
+//        System.out.println(result);
     }
+
+
 
 
 }
