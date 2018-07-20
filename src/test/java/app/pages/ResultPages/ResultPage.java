@@ -114,7 +114,7 @@ public class ResultPage extends AbstractPage {
 
 
                 if (minPrice < priceLimit) {
-                    By resultLinkLoc = By.xpath("(//div[@class='info-description']//a)[" + i + "]");
+                    By resultLinkLoc = By.xpath("(//div[@class='text-sm'])[" + i + "]/ancestor::li//div[@class='info-description']//a");
                     WebElement resultLink = driver.findElement(resultLinkLoc);
                     new ResultPage(driver).openInNewTab(resultLink);
 

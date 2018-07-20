@@ -146,7 +146,7 @@ public class Smoke extends BaseTest {
         );
 
         vstraivaemayaPosudomoechnayaMashinaPage.setFilters(filtersLocators, checkedFiltersLocators);
-        vstraivaemayaPosudomoechnayaMashinaPage.openAllWithPrice(10000);
+        vstraivaemayaPosudomoechnayaMashinaPage.openAllWithPrice(8000);
     }
 
 
