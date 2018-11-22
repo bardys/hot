@@ -3,7 +3,10 @@ package app.tests;
 import app.pages.HomePage;
 import app.pages.ResultPages.ResultPage;
 import app.pages.ResultPages.VstraivaemayaPosudomoechnayaMashinaPage;
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
 import org.junit.*;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -16,6 +19,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import static com.sun.org.apache.xerces.internal.util.PropertyState.is;
 
+@RunWith(JUnitParamsRunner.class)
 public class Smoke extends BaseTest {
     Boolean result;
 
@@ -114,8 +118,9 @@ public class Smoke extends BaseTest {
         Assert.assertTrue (actualAreFiltersDisplayed.equals(expectedAreFiltersDisplayed));
     }
 
+    @FileParameters("src/test/resources/minPriceParameters.csv")
     @Test
-    public void openAllWithPrice() throws InterruptedException {
+    public void openAllWithPrice(int a) throws InterruptedException {
         HomePage homePage = new HomePage(driver);
         VstraivaemayaPosudomoechnayaMashinaPage vstraivaemayaPosudomoechnayaMashinaPage =
                 homePage.chooseCategory(homePage.bt, homePage.vstraivaemayaTehnika, homePage.posudomoechnyeMashiny);
@@ -146,7 +151,13 @@ public class Smoke extends BaseTest {
         );
 
         vstraivaemayaPosudomoechnayaMashinaPage.setFilters(filtersLocators, checkedFiltersLocators);
-        vstraivaemayaPosudomoechnayaMashinaPage.openAllWithPrice(8000);
+        int expectedNewTabs = vstraivaemayaPosudomoechnayaMashinaPage.openAllWithPrice(a);
+
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        int actualNewTabs = tabs.size()-1;
+        System.out.println("Tabs opened: "+ actualNewTabs);
+
+        Assert.assertEquals(expectedNewTabs, actualNewTabs);
     }
 
 

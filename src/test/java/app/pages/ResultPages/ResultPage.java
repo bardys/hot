@@ -86,10 +86,12 @@ public class ResultPage extends AbstractPage {
 
 
 
-    public void openAllWithPrice(int priceLimit) {
+    public int openAllWithPrice(int priceLimit) throws InterruptedException {
 
         List<WebElement> resultPagesList;
         resultPagesList = driver.findElements(resultPagesNumberLoc);
+
+        int tabCounter = 0;
 
         for (int j=0; j<resultPagesList.size(); j++) {
 
@@ -113,10 +115,11 @@ public class ResultPage extends AbstractPage {
                 System.out.println(minPrice);
 
 
-                if (minPrice < priceLimit) {
+                if (priceLimit >= minPrice) {
                     By resultLinkLoc = By.xpath("(//div[@class='text-sm'])[" + i + "]/ancestor::li//div[@class='info-description']//a");
                     WebElement resultLink = driver.findElement(resultLinkLoc);
                     new ResultPage(driver).openInNewTab(resultLink);
+                    tabCounter++;
 
                 }
             }
@@ -138,6 +141,7 @@ public class ResultPage extends AbstractPage {
                         By resultLinkLoc = By.xpath("(//div/span/span[@class='value'])[" + i + "]/ancestor::div[@class='item-price stick-bottom']/preceding-sibling::div[@class='item-info']/div[@class='info-description']//a");
                         WebElement resultLink = driver.findElement(resultLinkLoc);
                         new ResultPage(driver).openInNewTab(resultLink);
+                        tabCounter++;
 
                     }
                 }
@@ -146,6 +150,7 @@ public class ResultPage extends AbstractPage {
             if(j<resultPagesList.size()-1){openNextPage();}
         }
 
+    return tabCounter;
     }
 
     public void openNextPage(){
